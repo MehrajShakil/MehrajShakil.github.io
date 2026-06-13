@@ -1,0 +1,25 @@
+---
+layout: page
+title: Portfolio
+subtitle: A selection of things I've designed, built, and shipped.
+permalink: /portfolio/
+---
+
+<div class="card-grid">
+  {% assign projects = site.projects | sort: 'date' | reverse %}
+  {% for project in projects %}
+  <article class="card">
+    <h3><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h3>
+    <p>{{ project.summary }}</p>
+    {% if project.tech %}
+    <ul class="tech-list">
+      {% for t in project.tech limit: 5 %}<li class="tag">{{ t }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+  </article>
+  {% endfor %}
+</div>
+
+{% if site.projects.size == 0 %}
+<p>No projects yet — add Markdown files to the <code>_projects/</code> folder.</p>
+{% endif %}

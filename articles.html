@@ -1,0 +1,22 @@
+---
+layout: page
+title: Articles
+subtitle: Notes, tutorials, and thoughts on what I'm learning.
+permalink: /articles/
+---
+
+<ul class="article-list">
+  {% for post in site.posts %}
+  <li class="article-item">
+    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+    <div>
+      <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+      {% if post.excerpt %}<p class="excerpt">{{ post.excerpt | strip_html | truncatewords: 28 }}</p>{% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+
+{% if site.posts.size == 0 %}
+<p>No articles yet — add Markdown files to the <code>_posts/</code> folder.</p>
+{% endif %}

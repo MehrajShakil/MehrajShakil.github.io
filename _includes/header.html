@@ -1,0 +1,22 @@
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="{{ '/' | relative_url }}">
+      <span class="brand-mark">MS</span>
+      <span class="brand-name">{{ site.title }}</span>
+    </a>
+
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="site-nav">
+      {%- assign nav_url = page.url | remove: 'index.html' -%}
+      <a href="{{ '/' | relative_url }}" class="{% if nav_url == '/' %}active{% endif %}">Home</a>
+      <a href="{{ '/portfolio/' | relative_url }}" class="{% if nav_url contains '/portfolio' %}active{% endif %}">Portfolio</a>
+      <a href="{{ '/articles/' | relative_url }}" class="{% if nav_url contains '/articles' %}active{% endif %}">Articles</a>
+      <a href="{{ '/resume/' | relative_url }}" class="{% if nav_url contains '/resume' %}active{% endif %}">Resume</a>
+      <a href="{{ '/contact/' | relative_url }}" class="{% if nav_url contains '/contact' %}active{% endif %}">Contact</a>
+      <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">🌙</button>
+    </nav>
+  </div>
+</header>

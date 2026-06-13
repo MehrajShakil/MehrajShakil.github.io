@@ -1,0 +1,82 @@
+---
+layout: default
+title: Home
+---
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="hero-eyebrow">{{ site.tagline }}</p>
+      <h1>Hi, I'm <span class="grad">Mehraj Shakil</span> 👋</h1>
+      <p class="lead">
+        I build things for the web and write about what I learn along the way.
+        Welcome to my corner of the internet — here you'll find my projects,
+        articles, and resume all in one place.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="{{ '/portfolio/' | relative_url }}">View my work</a>
+        <a class="btn btn-ghost" href="{{ '/contact/' | relative_url }}">Get in touch</a>
+      </div>
+    </div>
+    <div class="hero-avatar">MS</div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="section">
+  <div class="container">
+    <div class="section-head"><h2>About me</h2></div>
+    <div class="prose" style="max-width: 760px;">
+      <p>
+        I'm a developer passionate about building clean, useful software and
+        sharing knowledge. Replace this paragraph with a short bio — what you do,
+        what you're interested in, and what you're currently working on.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Featured projects -->
+<section class="section section-soft">
+  <div class="container">
+    <div class="section-head">
+      <h2>Featured projects</h2>
+      <a class="link-more" href="{{ '/portfolio/' | relative_url }}">All projects →</a>
+    </div>
+    <div class="card-grid">
+      {% assign featured = site.projects | sort: 'date' | reverse %}
+      {% for project in featured limit: 3 %}
+      <article class="card">
+        <h3><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h3>
+        <p>{{ project.summary }}</p>
+        {% if project.tech %}
+        <ul class="tech-list">
+          {% for t in project.tech limit: 4 %}<li class="tag">{{ t }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Latest articles -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Latest articles</h2>
+      <a class="link-more" href="{{ '/articles/' | relative_url }}">All articles →</a>
+    </div>
+    <ul class="article-list">
+      {% for post in site.posts limit: 4 %}
+      <li class="article-item">
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+        <div>
+          <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+          {% if post.excerpt %}<p class="excerpt">{{ post.excerpt | strip_html | truncatewords: 24 }}</p>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>

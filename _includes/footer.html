@@ -1,0 +1,21 @@
+<footer class="site-footer">
+  <div class="container footer-wrap">
+    <p class="footer-brand">{{ site.title }}</p>
+    <nav class="footer-social">
+      {% if site.github_username != "" %}
+        <a href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">GitHub</a>
+      {% endif %}
+      {% if site.linkedin_username != "" %}
+        <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}" target="_blank" rel="noopener">LinkedIn</a>
+      {% endif %}
+      {% if site.twitter_username != "" %}
+        <a href="https://twitter.com/{{ site.twitter_username }}" target="_blank" rel="noopener">Twitter</a>
+      {% endif %}
+      {% if site.email != "" %}
+        <a href="mailto:{{ site.email }}">Email</a>
+      {% endif %}
+      <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+    </nav>
+    <p class="footer-copy">© {{ 'now' | date: "%Y" }} {{ site.author }}. Built with Jekyll &amp; GitHub Pages.</p>
+  </div>
+</footer>

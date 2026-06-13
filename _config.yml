@@ -1,0 +1,60 @@
+# --- Site settings ---
+title: Mehraj Shakil
+tagline: Developer · Writer · Builder
+description: >-
+  Personal website of Mehraj Shakil — portfolio, articles, and resume.
+author: Mehraj Shakil
+email: your-email@example.com
+
+# The site URL. For a user page the baseurl stays empty.
+url: "https://MehrajShakil.github.io"
+baseurl: ""
+
+# --- Social links (leave blank to hide) ---
+github_username: MehrajShakil
+linkedin_username: ""
+twitter_username: ""
+mastodon_url: ""
+
+# --- Build settings ---
+markdown: kramdown
+highlighter: rouge
+permalink: /articles/:year/:month/:day/:title/
+timezone: Asia/Dhaka
+
+# Collections
+collections:
+  projects:
+    output: true
+    permalink: /portfolio/:name/
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project
+  - scope:
+      path: ""
+    values:
+      layout: page
+
+# Plugins supported by GitHub Pages
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+  - .gitignore
