@@ -16,6 +16,12 @@
   icon: "🏗️"
   series: true
 
+- slug: system-design-problems
+  title: System Design Problems
+  description: "End-to-end walkthroughs of real-world system design problems (Uber, Netflix, and more)."
+  icon: "🧩"
+  series: true
+
 - slug: csharp
   title: "C#"
   description: "Notes and deep dives on C# and .NET."
