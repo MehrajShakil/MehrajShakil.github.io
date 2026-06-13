@@ -1,21 +1,87 @@
 ---
 layout: page
 title: Articles
-subtitle: Notes, tutorials, and thoughts on what I'm learning.
+subtitle: Notes, tutorials, and series organized by topic.
 permalink: /articles/
 ---
 
-<ul class="article-list">
-  {% for post in site.posts %}
-  <li class="article-item">
-    <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
-    <div>
-      <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-      {% if post.excerpt %}<p class="excerpt">{{ post.excerpt | strip_html | truncatewords: 28 }}</p>{% endif %}
-    </div>
-  </li>
+{%- comment -%}
+  Posts are grouped by their `topic:` front matter (defined in _data/topics.yml).
+  Series topics are numbered and ordered by `order:`; others are newest-first.
+{%- endcomment -%}
+
+{% if site.data.topics.size > 1 %}
+<nav class="topic-nav">
+  {% for topic in site.data.topics %}
+    {% assign count = site.posts | where: "topic", topic.slug | size %}
+    {% if count > 0 %}<a href="#{{ topic.slug }}">{% if topic.icon %}{{ topic.icon }} {% endif %}{{ topic.title }}</a>{% endif %}
   {% endfor %}
-</ul>
+</nav>
+{% endif %}
+
+{% for topic in site.data.topics %}
+  {% assign topic_posts = site.posts | where: "topic", topic.slug %}
+  {% if topic_posts.size > 0 %}
+    {% if topic.series %}
+      {% assign sorted_posts = topic_posts | sort: "order" %}
+    {% else %}
+      {% assign sorted_posts = topic_posts | sort: "date" | reverse %}
+    {% endif %}
+
+    <section class="topic-block" id="{{ topic.slug }}">
+      <div class="topic-head">
+        <h2 class="topic-title">{% if topic.icon %}<span class="topic-icon">{{ topic.icon }}</span>{% endif %}{{ topic.title }}</h2>
+        {% if topic.description %}<p class="topic-desc">{{ topic.description }}</p>{% endif %}
+      </div>
+
+      <ol class="article-list {% if topic.series %}series-list{% endif %}">
+        {% for post in sorted_posts %}
+        <li class="article-item">
+          {% if topic.series %}
+            <span class="series-num">{{ post.order | default: forloop.index }}</span>
+          {% else %}
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+          {% endif %}
+          <div>
+            <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+            {% if post.excerpt %}<p class="excerpt">{{ post.excerpt | strip_html | truncatewords: 28 }}</p>{% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+  {% endif %}
+{% endfor %}
+
+{%- comment -%} Posts without a recognized topic fall under "Other". {%- endcomment -%}
+{% assign known_slugs = "" | split: "" %}
+{% for topic in site.data.topics %}{% assign known_slugs = known_slugs | push: topic.slug %}{% endfor %}
+
+{% assign other_posts = "" | split: "" %}
+{% for post in site.posts %}
+  {% unless known_slugs contains post.topic %}
+    {% assign other_posts = other_posts | push: post %}
+  {% endunless %}
+{% endfor %}
+
+{% if other_posts.size > 0 %}
+<section class="topic-block" id="other">
+  <div class="topic-head">
+    <h2 class="topic-title"><span class="topic-icon">📝</span>Other</h2>
+  </div>
+  <ol class="article-list">
+    {% for post in other_posts %}
+    <li class="article-item">
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+      <div>
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        {% if post.excerpt %}<p class="excerpt">{{ post.excerpt | strip_html | truncatewords: 28 }}</p>{% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+{% endif %}
 
 {% if site.posts.size == 0 %}
 <p>No articles yet — add Markdown files to the <code>_posts/</code> folder.</p>

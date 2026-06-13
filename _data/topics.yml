@@ -1,0 +1,29 @@
+# Topics / series for the Articles section.
+# To add a new topic later (e.g. C#, DevOps), just add an entry here
+# and set `topic: <slug>` in a post's front matter.
+#
+# Fields:
+#   slug        unique id, must match the `topic:` value used in posts
+#   title       display name
+#   description short blurb shown under the topic heading
+#   icon        emoji shown next to the title
+#   series      true  -> posts read in sequence, sorted by `order` (ascending)
+#               false -> posts sorted newest first (default)
+
+- slug: system-design
+  title: System Design
+  description: "Thinking through system design concepts and classic problems, one step at a time."
+  icon: "🏗️"
+  series: true
+
+- slug: csharp
+  title: "C#"
+  description: "Notes and deep dives on C# and .NET."
+  icon: "💜"
+  series: false
+
+- slug: devops
+  title: DevOps
+  description: "CI/CD, infrastructure, automation, and everything in between."
+  icon: "⚙️"
+  series: false

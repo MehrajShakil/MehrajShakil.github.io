@@ -165,6 +165,56 @@ img { max-width: 100%; height: auto; }
 .article-item .excerpt { color: var(--text-soft); margin: 6px 0 0; font-size: .95rem; }
 
 /* ===========================================================
+   Topic groups / series (articles page)
+   =========================================================== */
+.topic-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 36px; }
+.topic-nav a {
+  border: 1px solid var(--border); background: var(--surface);
+  padding: 6px 14px; border-radius: 999px; font-weight: 600; font-size: .9rem;
+  color: var(--text-soft);
+}
+.topic-nav a:hover { color: var(--text); background: var(--bg-soft); text-decoration: none; }
+
+.topic-block { margin: 0 0 48px; scroll-margin-top: 88px; }
+.topic-head { margin-bottom: 12px; }
+.topic-title { display: flex; align-items: center; gap: 10px; font-size: 1.5rem; margin: 0; }
+.topic-icon { font-size: 1.3rem; }
+.topic-desc { color: var(--text-soft); margin: 6px 0 0; }
+
+.series-list { counter-reset: none; padding: 0; list-style: none; }
+.series-num {
+  display: grid; place-items: center; flex-shrink: 0;
+  width: 30px; height: 30px; border-radius: 8px;
+  background: var(--accent-soft); color: var(--accent-text);
+  font-weight: 700; font-size: .9rem; font-variant-numeric: tabular-nums;
+  min-width: auto;
+}
+ol.article-list { padding: 0; list-style: none; }
+
+.topic-badge {
+  display: inline-block; background: var(--accent-soft); color: var(--accent-text);
+  padding: 3px 12px; border-radius: 999px; font-weight: 600; font-size: .82rem;
+}
+.topic-badge:hover { text-decoration: none; filter: brightness(.97); }
+
+.series-nav {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 40px 0 0;
+}
+.series-nav-link {
+  border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px;
+  display: flex; flex-direction: column; gap: 4px; font-weight: 600; color: var(--text);
+  background: var(--surface); transition: .15s;
+}
+.series-nav-link:hover { border-color: var(--accent); text-decoration: none; transform: translateY(-2px); }
+.series-nav-link span { color: var(--text-soft); font-size: .8rem; font-weight: 500; }
+.series-nav-link.next { text-align: right; align-items: flex-end; }
+
+@media (max-width: 560px) {
+  .series-nav { grid-template-columns: 1fr; }
+  .series-nav-link.next { text-align: left; align-items: flex-start; }
+}
+
+/* ===========================================================
    Prose / article body
    =========================================================== */
 .prose { font-size: 1.05rem; }

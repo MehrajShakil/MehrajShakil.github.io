@@ -1,9 +1,19 @@
 ---
 layout: default
 ---
+
+{%- comment -%} Resolve this post's topic metadata from _data/topics.yml {%- endcomment -%}
+{% assign topic_meta = site.data.topics | where: "slug", page.topic | first %}
+
 <article class="page-wrap post">
   <header class="post-header">
     <p class="post-meta">
+      {% if topic_meta %}
+        <a class="topic-badge" href="{{ '/articles/' | relative_url }}#{{ topic_meta.slug }}">
+          {% if topic_meta.icon %}{{ topic_meta.icon }} {% endif %}{{ topic_meta.title }}
+          {% if topic_meta.series and page.order %} · Part {{ page.order }}{% endif %}
+        </a> ·
+      {% endif %}
       <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
       {% if page.tags.size > 0 %}
         · {% for tag in page.tags %}<span class="tag">#{{ tag }}</span> {% endfor %}
@@ -17,7 +27,36 @@ layout: default
     {{ content }}
   </div>
 
+  {%- comment -%} Sequential prev/next within a series topic {%- endcomment -%}
+  {% if topic_meta and topic_meta.series %}
+    {% assign series_posts = site.posts | where: "topic", page.topic | sort: "order" %}
+    {% assign prev_post = nil %}
+    {% assign next_post = nil %}
+    {% assign found = false %}
+    {% for p in series_posts %}
+      {% if found and next_post == nil %}
+        {% assign next_post = p %}
+      {% endif %}
+      {% if p.url == page.url %}
+        {% assign found = true %}
+      {% endif %}
+      {% unless found %}
+        {% assign prev_post = p %}
+      {% endunless %}
+    {% endfor %}
+    {% if prev_post or next_post %}
+    <nav class="series-nav">
+      {% if prev_post %}<a class="series-nav-link prev" href="{{ prev_post.url | relative_url }}"><span>← Previous</span>{{ prev_post.title }}</a>{% else %}<span></span>{% endif %}
+      {% if next_post %}<a class="series-nav-link next" href="{{ next_post.url | relative_url }}"><span>Next →</span>{{ next_post.title }}</a>{% endif %}
+    </nav>
+    {% endif %}
+  {% endif %}
+
   <footer class="post-footer">
-    <a class="back-link" href="{{ '/articles/' | relative_url }}">← All articles</a>
+    {% if topic_meta %}
+      <a class="back-link" href="{{ '/articles/' | relative_url }}#{{ topic_meta.slug }}">← All {{ topic_meta.title }} articles</a>
+    {% else %}
+      <a class="back-link" href="{{ '/articles/' | relative_url }}">← All articles</a>
+    {% endif %}
   </footer>
 </article>
